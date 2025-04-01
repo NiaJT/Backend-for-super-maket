@@ -27,7 +27,7 @@ router.get(
   }
 );
 //product list for seller
-router.get(
+router.post(
   "/product/seller/list",
   isSeller,
   validateReqbody(paginationSchema),
@@ -43,7 +43,17 @@ router.get(
       { $match: { sellerId: req.loggedInUser } },
       { $skip: skip },
       { $limit: limit },
-      { $project: { sellerId: 0 } },
+      {
+        $project: {
+          seller_id: 1,
+          _id: 1,
+          name: 1,
+          brand: 1,
+          price: 1,
+          quantity: 1,
+          shortDescription: {$substr:["$description",0,200]},
+        },
+      },
     ]);
     res.status(200).send({
       message: "product list",
