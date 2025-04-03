@@ -51,7 +51,7 @@ router.post(
           brand: 1,
           price: 1,
           quantity: 1,
-          shortDescription: {$substr:["$description",0,200]},
+          shortDescription: { $substr: ["$description", 0, 200] },
         },
       },
     ]);
@@ -114,8 +114,8 @@ router.delete(
   validMongoId,
   isOwnerofProduct,
   async (req, res) => {
-    await productTable.deleteOne({ _id: productId });
-    return res.status(200).send({ message: "Deleting..." });
+    await productTable.deleteOne({ _id: req.params.id });
+    return res.status(200).send({ message: "Deleted product Successfully" });
   }
 );
 router.put(
